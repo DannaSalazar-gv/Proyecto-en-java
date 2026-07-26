@@ -2,30 +2,10 @@ package com.mycompany.simuladororbita;
 
 import java.io.*;
 
-/*
- * Simulador de Orbitas y Trayectorias.
- * Version corregida del codigo exportado automaticamente por PSeInt (psexport).
- *
- * Cambios respecto al export automatico (misma logica, pero funcional en Java):
- *  1) Java no soporta pasaje por referencia para tipos primitivos ni String, a diferencia
- *     de PSeInt ("Por Referencia"). Por eso, todas las variables que el pseudocodigo modificaba
- *     por referencia (contador, arreglos, masa/nombre del cuerpo central, etc.) ahora son
- *     CAMPOS DE INSTANCIA de la clase, y los metodos las modifican directamente en vez de
- *     recibirlas como parametros.
- *  2) Se elimino la linea invalida "boolean verdadero);;" que dejo el exportador.
- *  3) "bufEntrada" era un campo de instancia pero se usaba desde metodos "static": ahora
- *     todos los metodos son de instancia y comparten el mismo BufferedReader.
- *  4) Los arreglos en PSeInt son 1-based (indices 1..15); en Java son 0-based (indices 0..14).
- *     Se corrigio para guardar cada simulacion en nombres[contador] (no contador+1) y
- *     recorrerlos con "for (i = 0; i < contador; i++)".
- *  5. asignarCuerpoCeleste() y asignarMision() ahora devuelven sus resultados en vez de
- *     intentar modificar parametros por referencia (lo cual no existe en Java).
- */
 public class SimuladorOrbita {
 
 	private final BufferedReader bufEntrada = new BufferedReader(new InputStreamReader(System.in));
 
-	// ===== Estado compartido entre simulaciones (antes se pasaba "Por Referencia") =====
 	private final String[] nombres = new String[15];
 	private final String[] cuerposCentrales = new String[15];
 	private final double[] masas = new double[15];
@@ -45,8 +25,6 @@ public class SimuladorOrbita {
 	private double sumaDistancia = 0;
 	private double sumaCombustible = 0;
 
-	// Pequena clase auxiliar para poder "devolver" 3 valores desde asignarCuerpoCeleste
-	// (Java no permite pasar primitivos/String por referencia como hace PSeInt).
 	private static class CuerpoCeleste {
 		String nombre;
 		double masa;
